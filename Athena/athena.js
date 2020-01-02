@@ -4,49 +4,40 @@ const Commande = '!dis '
 const CommandeV = '!joue '
 const CommandeQ = '!pars'
 const Commandetts = '!tts '
-const YTDL = require('ytdl-core')
+const ytdl = require('ytdl-core')
 
-function play(connection, message, serveur)
-{
-  connection.playStream(YTDL(message,{filter: "audioonly"}))
-}
+
+bot.on('message', async message => {
+  if (message.content.startsWith(CommandeV))
+  {
+    const args = message.content.split(' ');
+    const voiceChannel = message.member.voiceChannel;
+    if (!voiceChannel) return message.channel.send("Désolée mais il faut être en vocal pour me faire venir");
+    try
+    {
+      var connection = await voiceChannel.join();
+    } catch (error)
+    {
+      console.error("je n'ai pas pu rejoindre le vocal : ${error}");
+      return message.channel.send("je n'ai pas pu rejoindre le vocal : ${error}");
+    }
+    const dispatcher = connection.playStream(ytdl(args[1]))
+      .on('end', () => {
+        console.log("chanson terminée !");
+        voiceChannel.leave();
+      })
+      .on('error', error => {
+        console.error(error);
+      });
+    dispatcher.setVolumeLogarithmic(5 / 5);
+  }
+})
+
 
 bot.on('ready' , function ()
        {
         bot.user.setActivity('recherche des anciens agents overwatch')
        })
-
-
-bot.on('message', message => {
-  if (message.content.startsWith(CommandeV)) {
-    const str = message.content.substring(CommandeV.length)
-    if (!message.member.voiceChannel)
-    {
-      message.channel.send("Vous devez être en vocal")
-      return
-    }
-
-    var serveur = message.guild.id
-
-    if (!message.guild.voiceConnection)
-    {
-      message.member.voiceChannel.join
-
-      (function (connection)
-                                 {
-                                    connection.playFile(YTDL(str,{filter: "audioonly"}))
-
-                                 })
-
-    }
-  }
-});
-bot.on('message', message => {
-  if (message.content.startsWith(CommandeQ)) {
-    message.member.voiceChannel.leave()
-  }
-  })
-
 
 bot.on('message', message => {
   if (message.content.startsWith(Commande)) {
@@ -61,25 +52,6 @@ bot.on('message', message => {
     bot.channels.find("name","general").send(str, {tts: true})
   }
 });
-
-
-bot.on('presenceUpdate', async (oldMember, newMember) => {
-  console.log('Presence:', newMember.presence)
-
-  if (!newMember.voiceChannel) {
-    return
-  }
-
-  const connection = await newMember.voiceChannel.join()
-
-  connection.on('speaking', (user, speaking) => {
-    if (speaking) {
-      console.log(`I'm listening to ${user.username}`)
-    } else {
-      console.log(`I stopped listening to ${user.username}`)
-    }
-  })
-})
 
 bot.on('message' , function (message)
        {
