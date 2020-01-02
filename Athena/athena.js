@@ -110,4 +110,4 @@ bot.on('message' , function (message)
         }
        })
 
-bot.login('NjMzMzgwMzYxODQ1NjA0Mzkw.Xg1iuA._eEXGRvWON0nOwTGszDfBO89Oa8')
+bot.login('NjMzMzgwMzYxODQ1NjA0Mzkw.Xg1moQ.a6t_30CLG51EamyLVg0lgOTRKoM')
