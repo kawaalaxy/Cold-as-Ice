@@ -1,6 +1,5 @@
 const Discord = require('discord.js')
 const bot = new Discord.Client()
-const Play = require('./play')
 const Commande = '!dis '
 const CommandeV = '!joue '
 const CommandeQ = '!pars'
@@ -18,12 +17,6 @@ bot.on('ready' , function ()
        })
 
 
-bot.on('message' , function (message)
-       {
-        let commandUsed = Play.parse(message)
-       })
-
-
 bot.on('message', message => {
   if (message.content.startsWith(CommandeV)) {
     const str = message.content.substring(CommandeV.length)
@@ -32,19 +25,19 @@ bot.on('message', message => {
       message.channel.send("Vous devez être en vocal")
       return
     }
-    
+
     var serveur = message.guild.id
-    
+
     if (!message.guild.voiceConnection)
     {
       message.member.voiceChannel.join
-      
+
       (function (connection)
                                  {
                                     connection.playFile(YTDL(str,{filter: "audioonly"}))
-                                    
+
                                  })
-      
+
     }
   }
 });
