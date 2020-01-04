@@ -1,4 +1,7 @@
 const Discord = require('discord.js')
+const fs = require('fs')
+
+const fichier = JSON.parse(fs.readFileSync("../../Athena.json"))
 const bot = new Discord.Client()
 const Commande = '!dis '
 const CommandeV = '!joue '
@@ -110,4 +113,4 @@ bot.on('message' , function (message)
         }
        })
 
-bot.login('NjMzMzgwMzYxODQ1NjA0Mzkw.Xg1ndQ.eMjhySQ8mGqIJLczF7mtdl7QGqY')
+bot.login(fichier.token)
