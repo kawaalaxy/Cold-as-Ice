@@ -8,6 +8,7 @@ const CommandeV = '!joue '
 const CommandeQ = '!pars'
 const Commandetts = '!tts '
 const ytdl = require('ytdl-core')
+var chansons = []
 
 
 bot.on('message', async message => {
@@ -25,13 +26,7 @@ bot.on('message', async message => {
       return message.channel.send("je n'ai pas pu rejoindre le vocal : ${error}");
     }
     const dispatcher = connection.playStream(ytdl(args[1]))
-      .on('end', () => {
-        console.log("chanson terminée !");
-        voiceChannel.leave();
-      })
-      .on('error', error => {
-        console.error(error);
-      });
+    
     dispatcher.setVolumeLogarithmic(5 / 5);
   }
 })
