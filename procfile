@@ -1,1 +1,1 @@
-worker: node athena/athena.js
+worker : node Athena/athena.js
