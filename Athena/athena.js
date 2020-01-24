@@ -22,11 +22,11 @@ bot.on('message', async message => {
       var connection = await voiceChannel.join();
     } catch (error)
     {
-      console.error("je n'ai pas pu rejoindre le vocal : ${error}");
-      return message.channel.send("je n'ai pas pu rejoindre le vocal : ${error}");
+      console.error("je n'ai pas pu rejoindre le vocal");
+      return message.channel.send("je n'ai pas pu rejoindre le vocal");
     }
     const dispatcher = connection.playStream(ytdl(args[1]))
-    
+
     dispatcher.setVolumeLogarithmic(5 / 5);
   }
 })
@@ -55,7 +55,7 @@ bot.on('message' , function (message)
        {
         if (message.content != '')
         {
-              var rand = Math.floor(Math.random() * 10) + 1 ;
+              var rand = Math.floor(Math.random() * 30) + 1 ;
               if (rand === 2)
               {
                      message.reply('tu tournes')
